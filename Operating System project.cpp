@@ -15,9 +15,9 @@ int flag[MAX],at[MAX],bt[MAX],pt[MAX],rt[MAX],ft[MAX],fe[MAX],fe_flag[MAX],pid[M
 //pt priority
 //pid process id
 
-queue<int> q;  //RR queue
+queue<int> q;  //Round robin queue
 
-void RR()
+void RoundRobin()
 {
       if(!q.empty())
       {
@@ -41,8 +41,8 @@ void RR()
 }
 
 int main()
-{
-    int i=0,n=0,smallest=0,last_smallest=-1,min,sum=0,large=0;
+{double avgwait;
+    int i=0,n=0,smallest=0,last_smallest=-1,min,sum=0,large=0,calwait=0;
     printf("enter no of processes");
     scanf("%d",&n);
     for(i=0;i<n;i++)
@@ -74,7 +74,7 @@ int main()
           		flag[last_smallest]=1;
         	}
         	last_smallest=-1;
-        	RR();
+        	RoundRobin();
         	continue;
       }
       else if(smallest!=-1 && !q.empty() && last_smallest==-1)
@@ -114,7 +114,14 @@ int main()
       last_smallest=smallest;
     }
    for(int i=0;i<n;i++){
-   printf("restonse time,finish time,waiting time");
-      cout<<pid[i]<<" "<<fe[i]<<" "<<ft[i]<<" "<<ft[i]-bt[i]-at[i]<<endl;}
+ calwait=ft[i]-bt[i]-at[i];
+	   avgwait=avgwait+calwait;
+	  printf("process id:%d\n",pid[i]);
+	  printf("Response time:%d\n",fe[i]);
+	  printf("finish time:%d\n",ft[i]);
+	  printf("waiting time:%d\n",ft[i]-bt[i]-at[i]);
+    }
+ avgwait=avgwait/n;
+ printf("average waiting time:%f\n",avgwait);
     return 0;
 }
